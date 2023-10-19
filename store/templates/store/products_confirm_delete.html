@@ -1,0 +1,23 @@
+{% extends 'store/index.html' %}
+
+{% block main %}
+<div class="text-center mt-4 mb-4">
+    <h3>Delete Product</h3>
+</div>
+<div class="text-center mt-5 mb-5">
+    <h5>¿Are you sure you want to remove this product? This action has no turning back.</h5>
+    <h5>If you're not sure, please turn <a class="nav-link " style="display: inline;" href="{% url 'Home' %}"><strong>back</strong></a>.</h5>
+</div>
+<div class="container d-flex justify-content-center mt-4 mb-5">
+    <body>
+        <form action="" method="POST">
+
+            {% csrf_token %}
+
+            <div class='container d-flex justify-content-center mt-4 mb-5'>
+                <input class="btn btn-danger ms-1 btn-sm text-center mb-5" type="submit" value="Delete">
+            </div>
+        </form>
+    </body>
+</div>
+{% endblock %}

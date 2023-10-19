@@ -1,0 +1,137 @@
+{% extends 'store/index.html' %}
+
+{% block main %}
+<main>
+<div class="container">
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark mt-3 mb-5 shadow p-2" style="background-color: #607D8B">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="{% url 'Home' %}">Categories:</a>
+
+    <!-- Toggle button -->
+    <button 
+       class="navbar-toggler" 
+       type="button" 
+       data-mdb-toggle="collapse" 
+       data-mdb-target="#navbarSupportedContent2" 
+       aria-controls="navbarSupportedContent2" 
+       aria-expanded="false" 
+       aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <!-- Link -->
+        <li class="nav-item acitve">
+          <a class="nav-link text-white" href="{% url 'Home' %}">All</a>
+        </li>
+        <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'Home' %}">Kennels</a>
+            </li>            
+      </ul>
+
+         <!-- Search -->
+         <form method="get" action="{% url 'Home' %}" class="w-auto py-1 d-flex justify-content-between">
+          <div class="input-group" style="width: 100%;">
+          <input type="search" class="form-control rounded-0 flex-grow-1 mr-2" name="name" placeholder="Search by name" aria-label="Search" value="{{ request.GET.name }}"
+          style="margin-right: 5px; min-width: 180px;">
+          <button type="submit" class="btn btn-primary ms-1 btn-sm">Search</button>
+          </div>
+        </form>
+
+    </div>
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+  
+<!-- Products -->
+<section>
+  <div class="text-center">
+    <div class="row">
+      
+      {% for products in object_list %}
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card">
+          <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+            data-mdb-ripple-color="light">
+            <img src="{{ products.image.url }}"
+              class="w-100" />
+            <a href="{% url 'Products' products.id %}">
+              <div class="mask">
+                
+                {% if products.is_sale %}
+                <div class="d-flex justify-content-start align-items-end h-100">
+                  <h5><span class="badge bg-info ms-2">On Sale</span></h5>
+                </div>
+                {% endif %}
+                
+              </div>
+              <div class="hover-overlay">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+              </div>
+            </a>
+          </div>
+          <div class="card-body">
+           
+            {% if user.is_authenticated %}
+            <a href="" class="text-reset">
+              <h5 class="card-title mb-2">{{ products.name }}</h5>
+            </a>
+            <a href="" class="text-reset ">
+              <p>{{ products.category }}</p>
+            </a>
+            <h6 class="mb-3 price">
+              {% if products.is_sale %}
+
+              <del>ARS {{ products.price }}</del>
+
+              ARS {{ products.sale_price }}
+              
+              {% else %}
+              
+              ARS {{ products.price }}
+              
+              {% endif %}
+            </h6>
+            <a href="{% url 'ProductsUpdate' products.id %}" class="btn btn-primary ms-1 btn-sm">Edit</a>
+            <a href="{% url 'ProductsDelete' products.id %}" class="btn btn-danger ms-1 btn-sm">Delete</a>
+            {% else %}
+            <a href="" class="text-reset">
+              <h5 class="card-title mb-2">{{ products.name }}</h5>
+            </a>
+            <a href="" class="text-reset ">
+              <p>{{ products.category }}</p>
+            </a>
+            <h6 class="mb-3 price">
+              {% if products.is_sale %}
+
+              <del>ARS {{ products.price }}</del>
+              
+              ARS {{ products.sale_price }}
+              
+              {% else %}
+              
+              ARS {{ products.price }}
+              
+              {% endif %}
+            </h6>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+{% endblock %}
